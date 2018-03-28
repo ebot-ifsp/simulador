@@ -1,3 +1,18 @@
+def inicializa_pista(pista,tipo):
+    if(tipo==1):
+        pista.append((200, 200))
+        pista.append((200, 600))
+        pista.append((600, 600))
+        pista.append((600, 200))
+        pista.append((200,200))
+    if(tipo==2):
+        pista.append((200, 200))
+        pista.append((200, 600))
+        pista.append((600, 600))
+        pista.append((600, 200))
+   
+        
+
 def desenha_pista(pista, tipo):
     background(30, 125, 30)
     # desenha a pista
