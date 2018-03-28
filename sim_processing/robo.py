@@ -3,7 +3,7 @@ class robo(object):
     """
     Guarda as propriedades, regras e estados do robo    
     """
-    def __init__(self, x, y, v=5, theta = -PI/2,if1=(-10, 10), if2=(0.001, 0.0010), if3=(10, 10)):
+    def __init__(self, x, y, v=5, theta = -PI/2,if1=(10, -10), if2=(10, 0), if3=(10, 10)):
         self.x = x
         self.y = y
         self.v = v
@@ -18,12 +18,13 @@ class robo(object):
         self.vmax = 5
         self.dtheta = 3.141519/18.0
         self.if1_atual, self.if2_atual, self.if3_atual = [0, 0], [0, 0], [0, 0]
-        self.if1_theta = tan(if1[1]/if1[0])
-        self.if1_mod = sqrt(if1[0]**2 + if1[1]**2)
-        self.if2_theta = tan(if2[1]/if2[0])
-        self.if2_mod = sqrt(if2[0]**2 + if2[1]**2)
-        self.if3_theta = tan(if3[1]/if3[0])
-        self.if3_mod = sqrt(if3[0]**2 + if3[1]**2)
+        
+        #self.if1_theta = tan(if1[1]/if1[0])
+        #self.if1_mod = sqrt(if1[0]**2 + if1[1]**2)
+        #self.if2_theta = tan(if2[1]/if2[0])
+        #self.if2_mod = sqrt(if2[0]**2 + if2[1]**2)
+        #self.if3_theta = tan(if3[1]/if3[0])
+        #self.if3_mod = sqrt(if3[0]**2 + if3[1]**2)
         self.carroP1, self.carroP2, self.carroP3 = [0, 0], [0, 0], [0, 0]
 
     def desenha(self):
@@ -60,33 +61,36 @@ class robo(object):
         s3 = s3_rgb == (0, 0, 0)
         
         # controle simples para teste sem a maquina de estado
-        if s1:
-            self.theta = self.theta - self.dtheta
-        elif s3:
-            self.theta = self.theta + self.dtheta
-        self.anda()
+        #if s1:
+        #    self.theta = self.theta - self.dtheta
+        #elif s3:
+        #    self.theta = self.theta + self.dtheta
+        #self.anda()
         
-        # Maquina de estado do marcio
-        # if self.estado == 1:
-        #     if s1 == 0 and s3 == 0:
-        #         self.v = self.v*1.1
-        #         if self.v > 5:
-        #             self.v = 5
-        #     elif s1 == 1:
-        #         self.estado = 2
-        #     else:
-        #         self.estado = 3
-        #     self.anda()
-        # if self.estado == 2:
-        #     if s2 == 0 or s1 == 1:
-        #         self.theta = self.theta - self.dtheta
-        #     else:
-        #         self.estado = 1
-        # elif self.estado == 3:
-        #     if s2 == 0 or s3 == 1:
-        #         self.theta = self.theta + self.dtheta
-        #     else:
-        #         self.estado = 1
+        #Maquina de estado do marcio
+        if self.estado == 1:
+             if s1 == 0 and s3 == 0:
+                 self.v = self.v*1.1
+                 if self.v > 5:
+                     self.v = 5
+                 self.anda()
+                 print("B:",s1,s2,s3)
+             elif s1 == 1:
+                 self.estado = 2
+             else:
+                 self.estado = 3
+            
+        if self.estado == 2:
+             if s2 == 0 or s1 == 1:
+                 self.theta = self.theta - self.dtheta
+             else:
+                 self.estado = 1
+        elif self.estado == 3:
+             if s2 == 0 or s3 == 1:
+                 self.theta = self.theta + self.dtheta
+                 print("B:",s1,s2,s3)
+             else:
+                 self.estado = 1
         
 
     def anda(self):
@@ -105,19 +109,20 @@ class robo(object):
         self.carroP3[1] = self.comprimento*sin(self.theta) + self.y
 
     def atualizaPosSensores(self):
-        self.if1_atual[0] = self.x + self.if1_mod*cos(self.theta + self.if1_theta)
-        self.if1_atual[1] = self.y + self.if1_mod*sin(self.theta + self.if1_theta)
-        self.if2_atual[0] = self.x + self.if2_mod*cos(self.theta + self.if2_theta)
-        self.if2_atual[1] = self.y + self.if2_mod*sin(self.theta + self.if2_theta)
-        self.if3_atual[0] = self.x + self.if3_mod*cos(self.theta + self.if3_theta)
-        self.if3_atual[1] = self.y + self.if3_mod*sin(self.theta + self.if3_theta)
         
-        # self.if1_atual[0] = self.if1[0]*cos(self.theta) - self.if1[1]*sin(self.theta) + self.x
-        # self.if1_atual[1] = self.if1[0]*sin(self.theta) + self.if1[1]*cos(self.theta) + self.y
-        # self.if2_atual[0] = self.if2[0]*cos(self.theta) - self.if2[1]*sin(self.theta) + self.x
-        # self.if2_atual[1] = self.if2[0]*sin(self.theta) + self.if2[1]*cos(self.theta) + self.y
-        # self.if3_atual[0] = self.if3[0]*cos(self.theta) - self.if3[1]*sin(self.theta) + self.x
-        # self.if3_atual[1] = self.if3[0]*sin(self.theta) + self.if3[1]*cos(self.theta) + self.y
+        #self.if1_atual[0] = self.x + self.if1_mod*cos(self.theta + self.if1_theta)
+        #self.if1_atual[1] = self.y + self.if1_mod*sin(self.theta + self.if1_theta)
+        #self.if2_atual[0] = self.x + self.if2_mod*cos(self.theta + self.if2_theta)
+        #self.if2_atual[1] = self.y + self.if2_mod*sin(self.theta + self.if2_theta)
+        #self.if3_atual[0] = self.x + self.if3_mod*cos(self.theta + self.if3_theta)
+        #self.if3_atual[1] = self.y + self.if3_mod*sin(self.theta + self.if3_theta)
+        
+         self.if1_atual[0] = self.if1[0]*cos(self.theta) - self.if1[1]*sin(self.theta) + self.x
+         self.if1_atual[1] = self.if1[0]*sin(self.theta) + self.if1[1]*cos(self.theta) + self.y
+         self.if2_atual[0] = self.if2[0]*cos(self.theta) - self.if2[1]*sin(self.theta) + self.x
+         self.if2_atual[1] = self.if2[0]*sin(self.theta) + self.if2[1]*cos(self.theta) + self.y
+         self.if3_atual[0] = self.if3[0]*cos(self.theta) - self.if3[1]*sin(self.theta) + self.x
+         self.if3_atual[1] = self.if3[0]*sin(self.theta) + self.if3[1]*cos(self.theta) + self.y
 
     def le_sensorIF(self):
         self.atualizaPosSensores()
