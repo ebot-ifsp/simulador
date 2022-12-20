@@ -1,7 +1,8 @@
 
 class robo(object):
     """
-    Guarda as propriedades, regras e estados do robo    
+    Guarda as propriedades, regras e estados do robo
+    
     """
     def __init__(self, x, y, v=5, theta = -PI/2,if1=(30, -20), if2=(30, 0), if3=(30, 20)):
         self.x = x
